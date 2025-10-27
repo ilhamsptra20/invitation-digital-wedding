@@ -1,7 +1,7 @@
 "use client";
 
 import WelcomeSection from "./WelcomeSection";
-import { useEffect, useState} from "react";
+import { useEffect, useRef, useState} from "react";
 import { motion, Variants } from "framer-motion";
 import Image from "next/image";
 
@@ -12,9 +12,56 @@ interface Message {
   created_at: string;
 }
 
-
 export default function Page() {
   const [isOpen, setIsOpen] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  useEffect(() => {
+    // siapkan audio
+    if (!audioRef.current) {
+      audioRef.current = new Audio("/assets/audio/music.mp3");
+      audioRef.current.loop = true;
+      audioRef.current.volume = 0; // start dari 0 biar halus
+    }
+
+    if (isOpen) {
+      const audio = audioRef.current;
+      const playMusic = async () => {
+        try {
+          await audio!.play();
+
+          // fade in suaranya biar smooth
+          let vol = 0;
+          const fade = setInterval(() => {
+            if (vol < 1) {
+              vol += 0.05;
+              audio!.volume = Math.min(vol, 1);
+            } else {
+              clearInterval(fade);
+            }
+          }, 200);
+        } catch (err) {
+          console.log("Autoplay gagal (browser block), nunggu interaksi user.");
+        }
+      };
+
+      playMusic();
+    } else {
+      // kalo ditutup, fade out + pause
+      const audio = audioRef.current;
+      if (audio) {
+        let vol = audio.volume;
+        const fadeOut = setInterval(() => {
+          if (vol > 0) {
+            vol -= 0.05;
+            audio.volume = Math.max(vol, 0);
+          } else {
+            clearInterval(fadeOut);
+            audio.pause();
+          }
+        }, 100);
+      }
+    }
+  }, [isOpen]);
 
   const [countdown, setCountdown] = useState<string>("");
   const [images, setImages] = useState<string[]>([]);
