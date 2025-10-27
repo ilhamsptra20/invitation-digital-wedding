@@ -46,7 +46,7 @@ export default function WelcomeSection({ onOpen }: { onOpen: () => void }) {
           {guestName || "Bapak/Ibu/Saudara/i"}
         </h1>
         <h2 className="text-xl md:text-3xl font-serif text-sky-900">
-            {place ? `${place}` : ""}
+            {place ? `di ${place}` : ""}
         </h2>
         <p className="mt-3 text-gray-700 text-base italic">
           Kami mengundang Anda untuk hadir di hari bahagia kami

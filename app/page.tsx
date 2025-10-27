@@ -45,7 +45,7 @@ export const metadata = {
     siteName: `${couple.man.alias} & ${couple.woman.alias} Wedding`,
     images: [
       {
-        url: "/assets/images/RR.png",
+        url: "/assets/images/RR.png", 
         width: 1200,
         height: 630,
         alt: `${couple.man.alias} & ${couple.woman.alias}`,
