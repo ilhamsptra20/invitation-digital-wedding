@@ -139,7 +139,7 @@ export default function MainSection ({ isOpen }: { isOpen: boolean })  {
         man : {
         name: "dwi restu pamungkas",
         alias: "restu",
-        father: "Mohamad Yunus",
+        father: "Muhamad Yunus",
         mother: "Uun Sumyati",
         order: 2,
         },
